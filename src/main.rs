@@ -1,21 +1,11 @@
-use serde::{Deserialize, Serialize};
-use std::fs::File;
-use std::io::Write;
-use icalendar::{Calendar, Event, Component, EventLike};
-use chrono::{NaiveDateTime, Utc};
-use std::collections::HashMap;
-use serde_json::Error;
-
 #[macro_use]
 extern crate lazy_static;
-#[derive(Serialize, Deserialize)]
-struct EvenementJson {
-    date_debut: String, // Format "AAAA-MM-JJ HH:MM"
-    date_fin: String,   // Format "AAAA-MM-JJ HH:MM"
-    titre: String,
-    description: Option<String>,
-}
-#[derive(Serialize, Deserialize, Debug, Clone)]
+use chrono::{NaiveDateTime, NaiveDate};
+use icalendar::{Calendar, Component, Event, EventLike};
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::Write;
+
 pub struct TimePeriod {
     pub start_time: String,
     pub end_time: String,
@@ -24,69 +14,67 @@ pub struct TimePeriod {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let hours = ["R2", "AM", "R1", "R", "R1", "R", "R", "R", "R2", "AM", "T", "R1", "R", "R", "AM", "R1", "TA", "R", "R1", "R", "R", "AM", "R2", "T", "R", "J3", "R", "R"];
-
+    let hours = [
+        "R2", "AM", "R1", "R", "R1", "R", "R", "R", "R2", "AM", "T", "R1", "R", "R", "AM", "R1",
+        "TA", "R", "R1", "R", "R", "AM", "R2", "T", "R", "J3", "R", "R",
+    ];
 
     lazy_static! {
-    static ref hours_map: HashMap<&'static str, TimePeriod> = {
-        let mut map = HashMap::new();
-        map.insert("F", TimePeriod {
-            start_time = "9:00",
-            end_time = "17:00",
-            title = "Formation 7h",
-            description = ""
-        });
-        map.insert("TA", TimePeriod {
-            start_time = "7:30",
-            end_time = "19:00",
-            title = "TA 11h",
-            description = ""
-        });
-        map.insert("T", TimePeriod {
-            start_time = "7:30",
-            end_time = "18:00",
-            title = "T 10h",
-            description = ""
-        });
-        map.insert("AM", TimePeriod {
-            start_time = "10:00",
-            end_time = "20:00",
-            title = "AM 9,5h",
-            description = ""
-        });
-        map.insert("J3", TimePeriod {
-            start_time = "7:30",
-            end_time = "16:00",
-            title = "J3 Journée 8h",
-            description = ""
-        });
-        map.insert("R2", TimePeriod {
-            start_time = "9:30",
-            end_time = "19:30",
-            title = "R2 journée 9.5h",
-            description = ""
-        });
-        map.insert("R1", TimePeriod {
-            start_time = "8:15",
-            end_time = "16:15",
-            title = "R1 matin 7.5h",
-            description = ""
-        });
-        map
-    };
-}
+        static ref hours_map: HashMap<&'static str, TimePeriod> = {
+            let mut map = HashMap::new();
+            map.insert("F", TimePeriod {
+                start_time = "9:00",
+                end_time = "17:00",
+                title = "Formation 7h",
+                description = ""
+            });
+            map.insert("TA", TimePeriod {
+                start_time = "7:30",
+                end_time = "19:00",
+                title = "TA bloc 11h",
+                description = ""
+            });
+            map.insert("T", TimePeriod {
+                start_time = "7:30",
+                end_time = "18:00",
+                title = "T bloc 10h",
+                description = ""
+            });
+            map.insert("AM", TimePeriod {
+                start_time = "10:00",
+                end_time = "20:00",
+                title = "AM 9,5h",
+                description = ""
+            });
+            map.insert("J3", TimePeriod {
+                start_time = "7:30",
+                end_time = "16:00",
+                title = "J3 Journée 8h",
+                description = ""
+            });
+            map.insert("R2", TimePeriod {
+                start_time = "9:30",
+                end_time = "19:30",
+                title = "R2 journée 9.5h",
+                description = ""
+            });
+            map.insert("R1", TimePeriod {
+                start_time = "8:15",
+                end_time = "16:15",
+                title = "R1 matin 7.5h",
+                description = ""
+            });
+            map.insert("SEM", TimePeriod {
+                start_time = "8:00",
+                end_time = "13:00",
+                title = "SEM (soins externes) 5h",
+                description = ""
+            });
+            map
+        };
+    }
 
-
-    // Exemple de JSON (à remplacer par la lecture de ton fichier)
-    let json_data = r#"[
-        ,
-        {
-            "date_debut": "2024-12-25 14:00",
-            "date_fin": "2024-12-25 16:00",
-            "titre": "Ouverture des cadeaux",
-            "description": null
-        }
-    ]"#;
+    let first_date = "2025-01-06".parse::<NaiveDate>().unwrap();
 
     let evenements: Vec<EvenementJson> = serde_json::from_str(json_data)?;
 
@@ -116,5 +104,3 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
-
-
