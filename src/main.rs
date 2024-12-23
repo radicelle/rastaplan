@@ -23,52 +23,52 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         static ref hours_map: HashMap<&'static str, TimePeriod> = {
             let mut map = HashMap::new();
             map.insert("F", TimePeriod {
-                start_time = "9:00",
-                end_time = "17:00",
-                title = "Formation 7h",
-                description = ""
+                start_time: "9:00".to_string(),
+                end_time: "17:00".to_string(),
+                title: "Formation 7h".to_string(),
+                description: "".to_string()
             });
             map.insert("TA", TimePeriod {
-                start_time = "7:30",
-                end_time = "19:00",
-                title = "TA bloc 11h",
-                description = ""
+                start_time: "7:30".to_string(),
+                end_time: "19:00".to_string(),
+                title: "TA bloc 11h".to_string(),
+                description: "".to_string()
             });
             map.insert("T", TimePeriod {
-                start_time = "7:30",
-                end_time = "18:00",
-                title = "T bloc 10h",
-                description = ""
+                start_time: "7:30".to_string(),
+                end_time: "18:00".to_string(),
+                title: "T bloc 10h".to_string(),
+                description: "".to_string()
             });
             map.insert("AM", TimePeriod {
-                start_time = "10:00",
-                end_time = "20:00",
-                title = "AM 9,5h",
-                description = ""
+                start_time: "10:00".to_string(),
+                end_time: "20:00".to_string(),
+                title: "AM 9,5h".to_string(),
+                description: "".to_string()
             });
             map.insert("J3", TimePeriod {
-                start_time = "7:30",
-                end_time = "16:00",
-                title = "J3 Journée 8h",
-                description = ""
+                start_time: "7:30".to_string(),
+                end_time: "16:00".to_string(),
+                title: "J3 Journée 8h".to_string(),
+                description: "".to_string()
             });
             map.insert("R2", TimePeriod {
-                start_time = "9:30",
-                end_time = "19:30",
-                title = "R2 journée 9.5h",
-                description = ""
+                start_time: "9:30".to_string(),
+                end_time: "19:30".to_string(),
+                title: "R2 journée 9.5h".to_string(),
+                description: "".to_string()
             });
             map.insert("R1", TimePeriod {
-                start_time = "8:15",
-                end_time = "16:15",
-                title = "R1 matin 7.5h",
-                description = ""
+                start_time: "8:15".to_string(),
+                end_time: "16:15".to_string(),
+                title: "R1 matin 7.5h".to_string(),
+                description: "".to_string()
             });
             map.insert("SEM", TimePeriod {
-                start_time = "8:00",
-                end_time = "13:00",
-                title = "SEM (soins externes) 5h",
-                description = ""
+                start_time: "8:00".to_string(),
+                end_time: "13:00".to_string(),
+                title: "SEM (soins externes) 5h".to_string(),
+                description: "".to_string()
             });
             map
         };
